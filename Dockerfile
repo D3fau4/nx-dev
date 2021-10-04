@@ -27,7 +27,9 @@ RUN pacman --noconfirm -S \
     base-devel \
     git \
     cmake \
-    libx11
+    libx11 \
+    zip \
+    unzip
 
 RUN pacman-key --init
 # Install devkitpro 
@@ -45,7 +47,7 @@ RUN cat ./devkit_repo >> /etc/pacman.conf
 RUN pacman --noconfirm -U https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.xz
 # Now resync the database and update installed packages.
 RUN pacman -Sy
-
+# Update the image
 RUN pacman --noconfirm -Syu
 
 # Install devkitARM & devkitA64

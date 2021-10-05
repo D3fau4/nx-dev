@@ -60,7 +60,6 @@ RUN pacman --noconfirm -S \
     switch-cmake \
     switch-curl \
     switch-enet \
-    switch-examples \
     switch-ffmpeg \
     switch-flac \
     switch-freetype \
@@ -121,6 +120,10 @@ RUN pacman --noconfirm -S \
     switch-wslay \
     switch-zlib \
     switch-zziplib
+
+# Install Switch Tools
+RUN pacman --noconfirm -S \
+    hactool
 
 # Install Libnx
 RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \

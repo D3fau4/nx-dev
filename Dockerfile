@@ -37,12 +37,13 @@ RUN pacman-key --init
 # https://devkitpro.org/wiki/devkitPro_pacman
 
 # First import the key which is used to validate the packages 
-RUN pacman-key --recv BC26F752D25B92CE272E0F44F7FD5492264BB9D0 --keyserver keyserver.ubuntu.com
-RUN pacman-key --lsign BC26F752D25B92CE272E0F44F7FD5492264BB9D0
+RUN pacman-key --recv BC26F752D25B92CE272E0F44F7FD5492264BB9D0 --keyserver keyserver.ubuntu.com \
+    && pacman-key --lsign BC26F752D25B92CE272E0F44F7FD5492264BB9D0
 
 # Add the devkitPro repositories
 ADD devkit_repo ./devkit_repo
 RUN cat ./devkit_repo >> /etc/pacman.conf
+
 # Install the keyring which adds more keys which may be used to verify the packages. 
 RUN pacman --noconfirm -U https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.xz
 # Now resync the database and update installed packages.

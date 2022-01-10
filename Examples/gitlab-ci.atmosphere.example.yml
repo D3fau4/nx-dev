@@ -1,0 +1,23 @@
+image: d3fau4/nx-dev
+
+stages:
+  - build
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - echo "Compiling the code..."
+    - make -j$(nproc)
+    - make dist
+    - echo "Compile complete."
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploying application..."
+    - echo "Application successfully deployed."
+  artifacts:
+    paths:
+      - out/
+    expire_in: 1 week

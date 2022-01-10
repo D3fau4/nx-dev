@@ -1,0 +1,22 @@
+name: Build Homebrew
+
+on: [push,workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: d3fau4/nx-dev:latest  # or change 'latest' to 'v4.2.0' if you want compile with the release of libnx
+    steps:
+    - uses: actions/checkout@v1
+    - name: Update repo.
+      run: |
+        git submodule update --init --recursive
+        
+    - name: Build app
+      run: |
+        make -j$(nproc)
+        
+    - uses: actions/upload-artifact@master
+      with:
+        name: Homebrew
+        path: homebrew.nro

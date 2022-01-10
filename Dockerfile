@@ -124,7 +124,8 @@ RUN pacman --noconfirm -S \
 
 # Install Switch Tools
 RUN pacman --noconfirm -S \
-    hactool
+    hactool \
+    git
 
 # Install Libnx
 RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \

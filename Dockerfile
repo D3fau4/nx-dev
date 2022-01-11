@@ -12,7 +12,7 @@ ENV PATH="${PATH}:${DEVKITARM}/bin/:${DEVKITPPC}/bin/"
 ENV WORKDIR="/build"
 WORKDIR "${WORKDIR}"
 
-# Upgarde image
+# Upgrade image
 RUN pacman --noconfirm -Syu
 
 # Install requirements for libtransistor 

@@ -1,4 +1,4 @@
-FROM archlinux/archlinux
+FROM archlinux/archlinux:latest
 
 # Metadata indicating an image maintainer.
 LABEL maintainer="d3fau4@not-d3fau4.tk"
@@ -55,6 +55,7 @@ RUN pacman --noconfirm -Syu
 RUN pacman --noconfirm -S \
     switch-dev \
     devkitARM \
+    devkita64-cmake \
     switch-box2d \
     switch-bulletphysics \
     switch-bzip2 \

@@ -1,7 +1,7 @@
 FROM archlinux/archlinux:latest
 
 # Metadata indicating an image maintainer.
-LABEL maintainer="d3fau4@not-d3fau4.tk"
+LABEL maintainer="d3fau4@not-d3fau4.com"
 
 ENV DEVKITPRO=/opt/devkitpro
 ENV DEVKITARM=/opt/devkitpro/devkitARM

@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: d3fau4/nx-dev:latest  # or change 'latest' to 'v4.2.0' if you want compile with the release of libnx
+      image: ghcr.io/d3fau4/nx-dev:main  # or change 'latest' to 'v4.2.0' if you want compile with the release of libnx
     steps:
     - uses: actions/checkout@v1
     - name: Update repo.

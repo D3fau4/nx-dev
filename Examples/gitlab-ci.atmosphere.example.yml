@@ -1,4 +1,4 @@
-image: d3fau4/nx-dev
+image: ghcr.io/d3fau4/nx-dev:main
 
 stages:
   - build

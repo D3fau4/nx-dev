@@ -12,11 +12,6 @@ jobs:
     container:
       image: ghcr.io/d3fau4/nx-dev:main
     steps:
-    - uses: actions/checkout@v1
-    - name: Update repo.
-      run: |
-        git submodule update --init --recursive
-
     - name: Build app
       run: |
         make -j$(nproc)

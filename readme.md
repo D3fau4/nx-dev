@@ -12,6 +12,8 @@ jobs:
     container:
       image: ghcr.io/d3fau4/nx-dev:main
     steps:
+    - uses: actions/checkout@v3
+
     - name: Build app
       run: |
         make -j$(nproc)

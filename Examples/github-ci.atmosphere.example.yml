@@ -7,7 +7,7 @@ jobs:
     container:
       image: ghcr.io/d3fau4/nx-dev:main  # or change 'latest' to 'v4.2.0' if you want compile with the release of libnx
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Update repo.
       run: |
         git submodule update --init --recursive

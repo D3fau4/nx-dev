@@ -1,4 +1,4 @@
-FROM archlinux/archlinux:latest
+FROM archlinux:latest
 
 # Metadata indicating an image maintainer.
 LABEL maintainer="d3fau4@not-d3fau4.com"

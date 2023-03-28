@@ -1,4 +1,0 @@
-[dkp-libs]
-Server = https://pkg.devkitpro.org/packages
-[dkp-linux]
-Server = https://pkg.devkitpro.org/packages/linux/$arch/

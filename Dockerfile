@@ -1,58 +1,52 @@
-FROM archlinux/archlinux:latest
-
+FROM debian:stable-slim
 # Metadata indicating an image maintainer.
 LABEL maintainer="d3fau4@not-d3fau4.com"
 
 ENV DEVKITPRO=/opt/devkitpro
 ENV DEVKITARM=/opt/devkitpro/devkitARM
 ENV DEVKITPPC=/opt/devkitpro/devkitPPC
-ENV PATH="${PATH}:${DEVKITARM}/bin/:${DEVKITPPC}/bin/"
+ENV PATH="${PATH}:${DEVKITARM}/bin/:${DEVKITPPC}/bin/:${DEVKITPRO}/bin/"
 
 
 ENV WORKDIR="/build"
 WORKDIR "${WORKDIR}"
 
 # Upgrade image
-RUN pacman --noconfirm -Syu
+RUN apt update && apt upgrade -y
 
 # Install requirements for libtransistor 
-RUN pacman --noconfirm -S \
+RUN apt install -y \
+    python3 \
+    python3-pip \
+    python3-virtualenv \
+    squashfs-tools \
+    build-essential \
     llvm \
     clang \
-    lld \
-    python \
-    python-pip \
-    python-virtualenv \
-    squashfs-tools \
-    base-devel \
-    git \
     cmake \
-    libx11 \
+    lld \
+    git \
     zip \
-    unzip
+    unzip \
+    curl \
+    wget
 
-RUN pacman-key --init
-# Install devkitpro 
-# doc source :
-# https://devkitpro.org/wiki/devkitPro_pacman
-
-# First import the key which is used to validate the packages 
-RUN pacman-key --recv BC26F752D25B92CE272E0F44F7FD5492264BB9D0 --keyserver keyserver.ubuntu.com \
-    && pacman-key --lsign BC26F752D25B92CE272E0F44F7FD5492264BB9D0
-
-# Add the devkitPro repositories
-ADD devkit_repo ./devkit_repo
-RUN cat ./devkit_repo >> /etc/pacman.conf
-
-# Install the keyring which adds more keys which may be used to verify the packages. 
-RUN pacman --noconfirm -U https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.xz
 # Now resync the database and update installed packages.
-RUN pacman -Sy
+RUN apt update
 # Update the image
-RUN pacman --noconfirm -Syu
+RUN apt upgrade -y
+
+# workaround
+RUN ln -s /proc/self/mounts /etc/mtab
+
+ADD install-devkitpro-pacman ./install-devkitpro-pacman
+RUN chmod +x ./install-devkitpro-pacman && ./install-devkitpro-pacman
+
+# Install dkp-pacman
+RUN curl https://apt.devkitpro.org/install-devkitpro-pacman | bash
 
 # Install devkitARM & devkitA64
-RUN pacman --noconfirm -S \
+RUN dkp-pacman --noconfirm -S \
     switch-dev \
     devkitARM \
     devkita64-cmake \
@@ -124,9 +118,8 @@ RUN pacman --noconfirm -S \
     switch-zziplib
 
 # Install Switch Tools
-RUN pacman --noconfirm -S \
-    hactool \
-    git
+RUN dkp-pacman --noconfirm -S \
+    hactool
 
 # Install Libnx
 RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \

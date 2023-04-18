@@ -23,13 +23,21 @@ RUN apt install -y \
     build-essential \
     llvm \
     clang \
-    cmake \
     lld \
     git \
     zip \
     unzip \
     curl \
-    wget
+    wget \
+    libssl-dev
+
+# Install pip
+RUN pip3 install -U pip
+
+# Build and install cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.24.2/cmake-3.24.2.tar.gz && tar -zxvf cmake-3.24.2.tar.gz && \
+    cd cmake-3.24.2 && ./bootstrap && make && make install && cd .. && rm -rf cmake-3.24.2/
+
 
 # Now resync the database and update installed packages.
 RUN apt update
@@ -127,9 +135,6 @@ RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \
     && make \
     && make install \
     && rm -rf ${WORKDIR}/libnx
-
-# Install pip
-RUN pip3 install -U pip
 
 # Install normal libs
 RUN pip install lz4 \

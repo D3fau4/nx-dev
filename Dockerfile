@@ -129,8 +129,19 @@ RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \
     && rm -rf ${WORKDIR}/libnx
 
 # Install pip
-RUN pip3 install -U pip
+RUN pip3 install -U pip --break-system-packages
 
 # Install normal libs
 RUN pip install lz4 \
-    pycryptodome
+    pycryptodome \
+    --break-system-packages
+
+# Install Cmake
+RUN rm -rf /var/lib/apt/lists/* \
+  && wget https://github.com/Kitware/CMake/releases/download/v3.24.1/cmake-3.24.1-Linux-x86_64.sh \
+      -q -O /tmp/cmake-install.sh \
+      && chmod u+x /tmp/cmake-install.sh \
+      && mkdir /opt/cmake-3.24.1 \
+      && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.24.1 \
+      && rm /tmp/cmake-install.sh \
+      && ln -s /opt/cmake-3.24.1/bin/* /usr/local/bin

@@ -46,76 +46,7 @@ RUN chmod +x ./install-devkitpro-pacman && ./install-devkitpro-pacman
 RUN curl https://apt.devkitpro.org/install-devkitpro-pacman | bash
 
 # Install devkitARM & devkitA64
-RUN dkp-pacman --noconfirm -S \
-    switch-dev \
-    devkitARM \
-    devkita64-cmake \
-    switch-box2d \
-    switch-bulletphysics \
-    switch-bzip2 \
-    switch-cmake \
-    switch-curl \
-    switch-enet \
-    switch-ffmpeg \
-    switch-flac \
-    switch-freetype \
-    switch-giflib \
-    switch-glad \
-    switch-glfw \
-    switch-glm \
-    switch-harfbuzz \
-    switch-jansson \
-    switch-libass \
-    switch-libconfig \
-    switch-libdrm_nouveau \
-    switch-libexpat \
-    switch-libfribidi \
-    switch-libgd \
-    switch-libjpeg-turbo \
-    switch-libjson-c \
-    switch-liblzma \
-    switch-liblzo2 \
-    switch-libmad \
-    switch-libmikmod \
-    switch-libmodplug \
-    switch-libmpv \
-    switch-libogg \
-    switch-libopus \
-    switch-libpcre2 \
-    switch-libpng \
-    switch-libsamplerate \
-    switch-libsodium \
-    switch-libssh2 \
-    switch-libtheora \
-    switch-libtimidity \
-    switch-libvorbis \
-    switch-libvorbisidec\
-    switch-libvpx \
-    switch-libwebp \
-    switch-libxml2 \
-    switch-libzstd \
-    switch-lz4 \
-    switch-mbedtls \
-    switch-mesa \
-    switch-miniupnpc \
-    switch-mpg123 \
-    switch-ode \
-    switch-oniguruma \
-    switch-openal-soft \
-    switch-opusfile \
-    switch-physfs \
-    switch-pkg-config \
-    switch-sdl2 \
-    switch-sdl2_gfx \
-    switch-sdl2_image \
-    switch-sdl2_mixer \
-    switch-sdl2_net \
-    switch-sdl2_ttf \
-    switch-smpeg2 \
-    switch-tinyxml2 \
-    switch-wslay \
-    switch-zlib \
-    switch-zziplib
+RUN dkp-pacman -S $(dkp-pacman -Ssq switch-*) --noconfirm
 
 # Install Switch Tools
 RUN dkp-pacman --noconfirm -S \
@@ -138,10 +69,10 @@ RUN pip install lz4 \
 
 # Install Cmake
 RUN rm -rf /var/lib/apt/lists/* \
-  && wget https://github.com/Kitware/CMake/releases/download/v3.24.1/cmake-3.24.1-Linux-x86_64.sh \
+  && wget https://github.com/Kitware/CMake/releases/download/v3.27.7/cmake-3.27.7-Linux-x86_64.sh \
       -q -O /tmp/cmake-install.sh \
       && chmod u+x /tmp/cmake-install.sh \
-      && mkdir /opt/cmake-3.24.1 \
-      && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.24.1 \
+      && mkdir /opt/cmake-3.27.7 \
+      && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.27.7 \
       && rm /tmp/cmake-install.sh \
-      && ln -s /opt/cmake-3.24.1/bin/* /usr/local/bin
+      && ln -s /opt/cmake-3.27.7/bin/* /usr/local/bin

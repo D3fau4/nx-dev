@@ -39,11 +39,10 @@ RUN apt upgrade -y
 # workaround
 RUN ln -s /proc/self/mounts /etc/mtab
 
+# Install dkp-pacman
 ADD install-devkitpro-pacman ./install-devkitpro-pacman
 RUN chmod +x ./install-devkitpro-pacman && ./install-devkitpro-pacman
-
-# Install dkp-pacman
-RUN curl https://apt.devkitpro.org/install-devkitpro-pacman | bash
+# RUN curl https://apt.devkitpro.org/install-devkitpro-pacman | bash
 
 # Install devkitARM & devkitA64
 RUN dkp-pacman -S $(dkp-pacman -Ssq switch-*) --noconfirm
@@ -76,3 +75,6 @@ RUN rm -rf /var/lib/apt/lists/* \
       && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.27.7 \
       && rm /tmp/cmake-install.sh \
       && ln -s /opt/cmake-3.27.7/bin/* /usr/local/bin
+
+# Install GDB
+RUN dkp-pacman -Syu devkitA64-gdb --noconfirm

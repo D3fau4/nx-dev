@@ -53,7 +53,7 @@ RUN dkp-pacman --noconfirm -S \
     hactool
 
 # Install Libnx
-RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \
+RUN git clone https://github.com/Atmosphere-NX/libnx.git -b 1800_basic ${WORKDIR}/libnx \
     && cd ${WORKDIR}/libnx \
     && make \
     && make install \

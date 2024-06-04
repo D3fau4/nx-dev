@@ -6,7 +6,7 @@ ENV DEVKITPRO=/opt/devkitpro
 ENV DEVKITARM=/opt/devkitpro/devkitARM
 ENV DEVKITPPC=/opt/devkitpro/devkitPPC
 ENV PATH="${PATH}:${DEVKITARM}/bin/:${DEVKITPPC}/bin/:${DEVKITPRO}/bin/"
-
+ENV CMAKE_VERSION="3.29.3"
 
 ENV WORKDIR="/build"
 WORKDIR "${WORKDIR}"
@@ -31,11 +31,6 @@ RUN apt install -y \
     unzip \
     curl \
     wget
-
-# Now resync the database and update installed packages.
-RUN apt update
-# Update the image
-RUN apt upgrade -y
 
 # workaround
 RUN ln -s /proc/self/mounts /etc/mtab
@@ -69,13 +64,13 @@ RUN pip install lz4 \
 
 # Install Cmake
 RUN rm -rf /var/lib/apt/lists/* \
-  && wget https://github.com/Kitware/CMake/releases/download/v3.27.7/cmake-3.27.7-Linux-x86_64.sh \
+  && wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh \
       -q -O /tmp/cmake-install.sh \
       && chmod u+x /tmp/cmake-install.sh \
-      && mkdir /opt/cmake-3.27.7 \
-      && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-3.27.7 \
+      && mkdir /opt/cmake-${CMAKE_VERSION} \
+      && /tmp/cmake-install.sh --skip-license --prefix=/opt/cmake-${CMAKE_VERSION} \
       && rm /tmp/cmake-install.sh \
-      && ln -s /opt/cmake-3.27.7/bin/* /usr/local/bin
+      && ln -s /opt/cmake-${CMAKE_VERSION}/bin/* /usr/local/bin
 
 # Install GDB
 RUN dkp-pacman -Syu devkitA64-gdb --noconfirm

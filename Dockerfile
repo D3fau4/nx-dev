@@ -30,7 +30,8 @@ RUN apt install -y \
     zip \
     unzip \
     curl \
-    wget
+    wget \
+    aria2
 
 # workaround
 RUN ln -s /proc/self/mounts /etc/mtab
@@ -48,7 +49,7 @@ RUN dkp-pacman --noconfirm -S \
     hactool
 
 # Install Libnx
-RUN git clone https://github.com/switchbrew/libnx.git ${WORKDIR}/libnx \
+RUN git clone https://github.com/Atmosphere-NX/libnx.git -b 1900_basic ${WORKDIR}/libnx \
     && cd ${WORKDIR}/libnx \
     && make \
     && make install \

@@ -49,7 +49,7 @@ RUN dkp-pacman --noconfirm -S \
     hactool
 
 # Install Libnx
-RUN git clone https://github.com/Atmosphere-NX/libnx.git -b 1900_basic ${WORKDIR}/libnx \
+RUN git clone https://github.com/Atmosphere-NX/libnx.git -b 1900_support ${WORKDIR}/libnx \
     && cd ${WORKDIR}/libnx \
     && make \
     && make install \
